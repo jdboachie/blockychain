@@ -2,7 +2,7 @@ from uuid import uuid4
 from flask import Flask, jsonify, request
 
 
-from blockychain.blockchain import Blockchain
+from blockchain import Blockchain
 
 # Instantiate our Node
 app = Flask(__name__)
@@ -23,6 +23,8 @@ def home():
 def mine():
     # We run the proof of work algorithm to get the next proof
     last_block = blockchain.last_block
+    if not last_block:
+        return {}, 404
     last_proof = last_block['proof']
     proof = blockchain.proof_of_work(last_block)
 
